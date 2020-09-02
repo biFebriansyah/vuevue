@@ -7,6 +7,10 @@
 <script>
 export default {
     name: "App",
+
+    mounted() {
+        console.log(process.env.VUE_APP_TEST)
+    },
 }
 </script>
 
