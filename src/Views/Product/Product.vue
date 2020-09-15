@@ -98,6 +98,9 @@ export default {
         goto(data) {
             this.$router.push({ name: "detail", params: { data } })
         },
+        goParams(id) {
+            this.$router.push({ path: `/test/${id}` })
+        },
     },
     mounted() {
         axios
