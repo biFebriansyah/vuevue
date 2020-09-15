@@ -9,7 +9,7 @@
                 {{ data.description }}
             </p>
             <h3 class="price">{{ data.price }}</h3>
-            <router-link to="/prod" class="back">Back</router-link>
+            <router-link to="/" class="back">Back</router-link>
         </div>
     </div>
 </template>
