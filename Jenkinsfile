@@ -20,15 +20,4 @@ pipeline {
             }
         }
     }
-    post {
-        always {
-            // always run this stage
-        }
-        success {
-            // run if all job success
-        }
-        failur {
-            // run if job failed
-        }
-    }
 }
