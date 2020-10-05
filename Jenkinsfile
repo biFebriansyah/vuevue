@@ -5,63 +5,56 @@ pipeline {
 
     agent any
 
+    parameters {
+        string(name: 'HELLO', defaultValue: 'HalloFromParams', description: 'blabla')
+        booleanParam(name: 'RUNTEST', defaultValue: 'true', description: 'blabla')
+        choice(name: 'CICD', defaultValue: ['CI', 'CIANDCD'], description: 'blabla')
+    }
+
     stages {
         
         stage("Intall depdencies") {
             steps {
-                nodejs("node12") {
-                    sh 'npm install'
-                }
+                echo 'parameters = ${params.HELLO}'
             }
         }
 
         stage("build") {
             steps {
-                script{
-                    CommitHash = sh (script: "git log -n 1 --pretty=format:'%H'", returnStdout: true)
-                    builderImage = docker.build("bukanebi/vuevue:${CommitHash}")          
-                }
+                echo 'RUNTEST is : ${params.RUNTEST}'
             }
         }
 
         stage("test") {
-            steps {
-                script {
-                    builderImage.inside {
-                        sh 'echo passed'
-                    }
+            when {
+                expression {
+                    params.RUNTEST
                 }
+            }
+            steps {
+                echo "Testing Run"
             }
         }
 
         stage("Push Image") {
-            steps {
-                script {
-                    builderImage.push()
-                    builderImage.push("${env.GIT_BRANCH}")
+            when {
+                expression {
+                    params.CICD == 'CIANDCD'
                 }
+            }
+            steps {
+                echo "Puhs Image"
             }
         }
 
         stage("Deploy") {
-            steps {
-                script {
-                    sshPublisher(
-                        publishers: [
-                            sshPublisherDesc(
-                                configName: 'docker-host',
-                                verbose: false,
-                                transfers: [
-                                    sshTransfer(
-                                        execCommand: 'docker pull bukanebi/vuevue:master; docker kill vuevue; docker run -d --rm --name vuevue -p 8080:80 bukanebi/vuevue:master',
-                                        execTimeout: 120000,
-                                    )
-                                ]
-                            )
-                        ]
-                    )
-
+            when {
+                expression {
+                    params.CICD == 'CIANDCD'
                 }
+            }
+            steps {
+                echo "Deploying run"
             }
         }
     }
