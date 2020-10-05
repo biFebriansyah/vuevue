@@ -11,14 +11,14 @@ pipeline {
                     sshPublisher(
                         publishers: [
                             sshPublisherDesc(
-                                configName: 'docker-host,
-                                verbose: false
+                                configName: 'docker-host',
+                                verbose: false,
                                 transfers: [
                                     sshTransfer(
                                         execCommand: 'docker images',
                                         execTimeout: 120000,
                                     )
-                                ],
+                                ]
                             )
                         ]
                     )
