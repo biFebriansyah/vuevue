@@ -7,6 +7,7 @@ pipeline {
         stage("build") {
             steps {
                 echo 'buil step run'
+                echo 'buil Checkn'
             }
         }
         stage("test") {
