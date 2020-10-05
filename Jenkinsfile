@@ -38,7 +38,7 @@ pipeline {
             steps {
                 script {
                     builderImage.push()
-                    builderImage.push("env.BUILD_NUMBER")
+                    builderImage.push("${env.GIT_BRANCH}")
                 }
             }
         }
