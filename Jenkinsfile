@@ -1,5 +1,3 @@
-def builderImage
-def CommitHash
 
 pipeline {
 
@@ -15,13 +13,14 @@ pipeline {
         
         stage("Intall depdencies") {
             steps {
-                echo 'parameters = ${params.HELLO}'
+                echo "parameters = ${params.HELLO}"
             }
         }
 
         stage("build") {
             steps {
-                echo 'RUNTEST is : ${params.RUNTEST}'
+                echo "RUNTEST is : ${params.RUNTEST}"
+                echo "CICD IS : ${params.CICD}"
             }
         }
 
