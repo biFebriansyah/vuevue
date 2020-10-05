@@ -7,14 +7,25 @@ pipeline {
 
         stage("Deploy") {
             steps {
-                publishOverSsh {
-                    server('docker-host') {
-                        transferSet {
-                            execCommand('docker images')
-                        }
-                    }
+                script {
+                    sshPublisher(
+                        publishers: [
+                            sshPublisherDesc(
+                                configName: 'docker-host,
+                                verbose: false
+                                transfers: [
+                                    sshTransfer(
+                                        execCommand: 'docker images',
+                                        execTimeout: 120000,
+                                    )
+                                ],
+                            )
+                        ]
+                    )
+
                 }
             }
         }
     }
 }
+
