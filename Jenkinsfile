@@ -1,23 +1,37 @@
+def builderImage
+
 pipeline {
 
     agent any
 
     stages {
+        
+        stage("Intall depdencies") {
+            steps {
+                nodejs("node12") {
+                    sh 'npm install'
+                }
+            }
+        }
 
         stage("build") {
             steps {
-                echo 'buil step run'
-                echo 'buil Checkn'
+                builderImage = docker.build("bukanebi/vuevue:${GIT_COMMIT_HASH}")
             }
         }
+
         stage("test") {
             steps {
-                echo 'test step run'
+                builderImage.inside {
+                    sh 'echo passed'
+                }
             }
         }
-        stage("deploy") {
+
+        stage("Push Image") {
             steps {
-                echo 'deploy step run'
+                builderImage.push()
+                builderImage.push("env.BUILD_NUMBER")
             }
         }
     }
