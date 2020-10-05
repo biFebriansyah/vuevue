@@ -36,17 +36,6 @@ pipeline {
             }
         }
 
-        stage("Push Image") {
-            when {
-                expression {
-                    params.CICD == 'CIANDCD'
-                }
-            }
-            steps {
-                echo "Puhs Image"
-            }
-        }
-
         stage("Deploy") {
             when {
                 expression {
