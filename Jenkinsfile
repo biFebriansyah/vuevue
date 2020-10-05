@@ -16,22 +16,28 @@ pipeline {
 
         stage("build") {
             steps {
-                builderImage = docker.build("bukanebi/vuevue:${GIT_COMMIT_HASH}")
+                script{
+                    builderImage = docker.build("bukanebi/vuevue:${GIT_COMMIT_HASH}")          
+                }
             }
         }
 
         stage("test") {
             steps {
-                builderImage.inside {
-                    sh 'echo passed'
+                script {
+                    builderImage.inside {
+                        sh 'echo passed'
+                    }
                 }
             }
         }
 
         stage("Push Image") {
             steps {
-                builderImage.push()
-                builderImage.push("env.BUILD_NUMBER")
+                script {
+                    builderImage.push()
+                    builderImage.push("env.BUILD_NUMBER")
+                }
             }
         }
     }
