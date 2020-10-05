@@ -1,4 +1,5 @@
 def builderImage
+def CommitHash
 
 pipeline {
 
@@ -17,7 +18,8 @@ pipeline {
         stage("build") {
             steps {
                 script{
-                    builderImage = docker.build("bukanebi/vuevue:${GIT_COMMIT_HASH}")          
+                    CommitHash = sh (script: "git log -n 1 --pretty=format:'%H'", returnStdout: true)
+                    builderImage = docker.build("bukanebi/vuevue:${CommitHash}")          
                 }
             }
         }
