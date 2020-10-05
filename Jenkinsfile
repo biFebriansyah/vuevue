@@ -8,7 +8,7 @@ pipeline {
     parameters {
         string(name: 'HELLO', defaultValue: 'HalloFromParams', description: 'blabla')
         booleanParam(name: 'RUNTEST', defaultValue: 'true', description: 'blabla')
-        choice(name: 'CICD', defaultValue: ['CI', 'CIANDCD'], description: 'blabla')
+        choice(name: 'CICD', choices: ['CI', 'CIANDCD'], description: 'blabla')
     }
 
     stages {
