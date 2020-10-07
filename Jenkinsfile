@@ -1,3 +1,5 @@
+def builderDocker
+def CommitHash
 
 pipeline {
 
@@ -12,7 +14,18 @@ pipeline {
 
         stage('Build Project') {
             steps {
-                echo 'build...'
+                nodejs("node12") {
+                    sh 'yarn install'
+
+            }
+        }
+
+        stage('Build Docker Image') {
+            steps {
+                script {
+                    CommitHash = sh (script : "git log -n 1 --pretty=format:'%H'", returnStdout: true)
+                    builderDocker = docker.build("bukanebi/vuevue:${CommitHash}")
+                }
             }
         }
 
@@ -23,7 +36,11 @@ pipeline {
                 }
             }
             steps {
-                echo 'Testing...'
+                script {
+                    builderDocker.inside {
+                        sh 'echo passed'
+                    }
+                }
             }
         }
 
