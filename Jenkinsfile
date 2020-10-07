@@ -64,13 +64,12 @@ pipeline {
                     params.CICD == 'CICD'
                 }
             }
-
             steps {
                 script {
                     sshPublisher(
                         publishers: [
                             sshPublisherDesc(
-                                configName: 'docker-host',
+                                configName: 'Developmen',
                                 verbose: false,
                                 transfers: [
                                     sshTransfer(
