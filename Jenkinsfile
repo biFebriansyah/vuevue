@@ -44,6 +44,20 @@ pipeline {
             }
         }
 
+        stage('Push Image') {
+            when {
+                expression {
+                    params.RUNTEST
+                }
+            }
+
+            steps {
+                script {
+                    builderDocker.push("${env.GIT_BRANCH}")
+                }
+            }
+        }
+
         stage('Deploy') {
             when {
                 expression {
