@@ -3,7 +3,7 @@ pipeline {
 
     agent any
 
-    parametes {
+    parameters {
         booleanParam(name: 'RUNTEST', defaultValue: true, description: 'Toggle this value fro testing')
         choice(name: 'CICD', choices: ['CI', 'CICD'], description: 'Pick something')
     }
@@ -11,7 +11,7 @@ pipeline {
     stages {
 
         stage('Build Project') {
-            step {
+            steps {
                 echo 'build...'
             }
         }
@@ -22,7 +22,7 @@ pipeline {
                     params.RUNTEST
                 }
             }
-            step {
+            steps {
                 echo 'Testing...'
             }
         }
@@ -34,7 +34,7 @@ pipeline {
                 }
             }
 
-            step {
+            steps {
                 echo 'Deploy...'
             }
         }
