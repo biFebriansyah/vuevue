@@ -66,7 +66,22 @@ pipeline {
             }
 
             steps {
-                echo 'Deploy...'
+                script {
+                    sshPublisher(
+                        publishers: [
+                            sshPublisherDesc(
+                                configName: 'docker-host',
+                                verbose: false,
+                                transfers: [
+                                    sshTransfer(
+                                        execCommand: 'docker pull bukanebi/vuevue:master; docker kill vuevue; docker run -d --rm --name vuevue -p 8080:80 bukanebi/vuevue:master',
+                                        execTimeout: 120000,
+                                    )
+                                ]
+                            )
+                        ]
+                    )
+                }
             }
         }
     }
