@@ -16,7 +16,7 @@ pipeline {
             steps {
                 nodejs("node12") {
                     sh 'yarn install'
-
+                }
             }
         }
 
