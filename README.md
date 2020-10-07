@@ -1,5 +1,7 @@
 # sample-vue
 
+Hello From Github
+
 ## Project setup
 ```
 yarn install
